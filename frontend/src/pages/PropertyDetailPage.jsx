@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import api from '../services/api';
 
 function PropertyDetailPage() {
   const { id } = useParams();
@@ -20,21 +21,22 @@ function PropertyDetailPage() {
 
   
 
-    useEffect(() => {
-    const fetchProperty = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`/api/properties/${id}`);
-        console.log(response);
-        
-        // setProperty(response.data);
-      } catch (error) {
-        console.error('Error fetching property:', error);
-        setErrorMsg('Failed to load property. Please try again later.');
-      } finally {
-        setLoading(false);
+  const fetchProperty = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get(`/properties/${id}`);
+      if (!response.status !== 200) {
+        throw new Error('Failed to fetch property');
       }
-    };
+      setProperty(response);
+    } catch (error) {
+      console.error('Error fetching property:', error);
+      setErrorMsg('Failed to load property. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+    useEffect(() => {
 
     fetchProperty();
   }, [id]);
