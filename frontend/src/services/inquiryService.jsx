@@ -7,9 +7,14 @@ export const getInquiries = async (token) => {
   return response.data;
 };
 
+export const postInquiries = async (token) => {
+  const response = await api.post('/inquiries', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
 
 
-// import api from './api';
 
 export const deleteInquiry = async (id, token) => {
   try {

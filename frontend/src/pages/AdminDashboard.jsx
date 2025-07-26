@@ -4,42 +4,39 @@ import AdminSidebar from '../components/AdminSidebar';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { getProperties } from '../services/propertyService';
-
 
 const AdminDashboard = () => {
   const { token, admin } = useContext(AuthContext);
   const navigate = useNavigate();
-const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState([]);
   const [metrics, setMetrics] = useState({ totalListings: 0, totalInquiries: 0 });
   const [loading, setLoading] = useState(true);
-   useEffect(() => {
-       const fetchAllProperties = async () => {
-         setLoading(true);
-         try {
-           const allProps = await getProperties();
-           setProperties(allProps);
-         } finally {
-           setLoading(false);
-         }
-       };
-       fetchAllProperties();
-     }, []);
 
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this property?')) {
-      try {
-        await axios.delete(`/api/properties/${id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }).then((res)=>console.log(res))
-        // setProperties(properties.filter(p => p._id !== id));
-      } catch (err) {
-        alert('Failed to delete property');
-      }
+  // Fetch all properties and metrics
+  const fetchProperties = async () => {
+    setLoading(true);
+    try {
+      const allProps = await getProperties();
+      setProperties(allProps);
+    } catch (err) {
+      console.error('Failed to fetch properties', err);
     }
+    setLoading(false);
+  };
+
+  const fetchMetrics = async () => {
+    if (!token) return;
+    setLoading(true);
+    try {
+      const res = await api.get('/admin/metrics', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setMetrics(res.data);
+    } catch (err) {
+      console.error('Failed to fetch metrics', err);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -47,107 +44,110 @@ const [properties, setProperties] = useState([]);
       navigate('/admin/login');
       return;
     }
-
-    const fetchMetrics = async () => {
-      setLoading(true);
-      try {
-        const res = await api.get('/admin/metrics', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setMetrics(res.data);
-      } catch (err) {
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    fetchProperties();
     fetchMetrics();
   }, [admin, token, navigate]);
+
+  // Delete property handler
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this property?')) {
+      try {
+        await api.delete(`/properties/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setProperties(properties.filter(p => p._id !== id));
+        alert('Property deleted successfully');
+      } catch (err) {
+        console.error(err);
+        alert('Failed to delete property');
+      }
+    }
+  };
 
   if (!admin) return null;
 
   return (
-    <div style={{ display: 'flex'  }}>
+   <div className="admin-dashboard-container">
       <AdminSidebar />
-      <div style={{ display: 'flex' , flexWrap:'wrap' , marginLeft: '280px', paddingTop: '1rem' }}>
-      <Container style={{paddingTop: '1rem'  }}>
-        <h2 className="mb-4">Dashboard</h2>
-        {loading ? (
-          <Spinner animation="border" />
-        ) : (
-          <Row>
-            <Col md={6}>
-              <Card border="primary" className="mb-3">
-                <Card.Body>
-                  <Card.Title>Total Listings</Card.Title>
-                  <Card.Text style={{ fontSize: '1.5rem', fontWeight: '600' }}>
-                    {metrics.totalListings}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={6}>
-              <Card border="success" className="mb-3">
-                <Card.Body>
-                  <Card.Title>Total Inquiries</Card.Title>
-                  <Card.Text style={{ fontSize: '1.5rem', fontWeight: '600' }}>
-                    {metrics.totalInquiries}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        )}
-      </Container>
+      <div className="admin-main-content">
+        <Container>
+          <h2 className="dashboard-header">Admin Dashboard</h2>
+          
+          {loading ? (
+            <div className="text-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : (
+            <>
+              <Row className="metrics-container">
+                <Col md={6} className="mb-3">
+                  <Card className="metric-card primary">
+                    <Card.Body>
+                      <Card.Title className="metric-card-title">Total Listings</Card.Title>
+                      <Card.Text className="metric-card-value">
+                        {metrics.totalListings}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Card className="metric-card success">
+                    <Card.Body>
+                      <Card.Title className="metric-card-title">Total Inquiries</Card.Title>
+                      <Card.Text className="metric-card-value">
+                        {metrics.totalInquiries}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
 
-       <table style={{ width: '100%', borderCollapse: 'collapse'  }}>
-        <thead style={{ backgroundColor: '#f3f3f3' }}>
-          <tr>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Title</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>City</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Price</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(properties) ? (
-        properties.map((property) => (
-            <tr key={property._id}>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{property.title}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{property.location.city}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>${property.price.toLocaleString()}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                <button 
-                  onClick={() => navigate(`/properties/edit/${property._id}`)} 
-                  style={{ marginRight: 10, padding: '5px 10px', cursor: 'pointer' }}
-                >
-                  Edit
-                </button>
-                
-                <button 
-                  onClick={() => handleDelete(property._id)} 
-                  style={{ padding: '5px 10px', cursor: 'pointer', backgroundColor: '#e74c3c', color: '#fff', border: 'none' }}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-         ))
-        ) : (
-  <tr>
-    <td colSpan={4} style={{ padding: '10px', textAlign: 'center' }}>
-      No properties found
-    </td>
-  </tr>
-        )}
-
-          {properties.length === 0 && (
-            <tr>
-              <td colSpan={4} style={{ padding: '10px', textAlign: 'center' }}>No properties found</td>
-            </tr>
+              <div className="table-responsive">
+                <table className="properties-table">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>City</th>
+                      <th>Price</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Array.isArray(properties) && properties.length > 0 ? (
+                      properties.map((property) => (
+                        <tr key={property._id}>
+                          <td>{property.title}</td>
+                          <td>{property.location.city}</td>
+                          <td>₹{property.price.toLocaleString()}</td>
+                          <td>
+                            <button
+                              onClick={() => navigate(`/admin/add-property/${property._id}`)}
+                              className="action-btn edit-btn w-25"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDelete(property._id)}
+                              className="action-btn delete-btn w-25"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={4} className="no-properties">
+                          No properties found
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
-        </tbody>
-      </table>
+        </Container>
       </div>
     </div>
   );

@@ -9,8 +9,9 @@ const HomeSection = () => {
         <div 
       className="home-section d-flex align-items-center" 
       style={{
-        backgroundImage: 'url(/home.webp)',
-        backgroundSize: 'cover',
+       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/home.webp')`,
+
+      backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '600px',
         width : '85%',
@@ -22,7 +23,6 @@ const HomeSection = () => {
       <Container className="text-center">
         <h1 className="display-4 fw-bold">Extraordinary living begins here.</h1>
         <p className="lead">Finding unique, modern, affordable apartments to dream homes in the perfect location.</p>
-        <Button variant="dark" size="lg">Explore Listing</Button>
       </Container>
     </div>
         </center>

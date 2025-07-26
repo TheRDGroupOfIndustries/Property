@@ -13,6 +13,6 @@ router.post('/', submitInquiry);
 //
 router.get('/', auth, getInquiries);
 router.delete('/:id', auth, deleteInquiry);
-router.post('/:id/inquiries', submitInquiry);
+router.post('/inquiries', submitInquiry);
 
 module.exports = router;

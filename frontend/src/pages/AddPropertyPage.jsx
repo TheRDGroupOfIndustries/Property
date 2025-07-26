@@ -69,57 +69,91 @@ const AddPropertyPage = () => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+   <div className="add-property-container">
       <AdminSidebar />
-      <Container style={{ marginLeft: '220px', paddingTop: '3rem', maxWidth: '700px' }}>
-        <h2 className="mb-4">Add New Property</h2>
+      <Container className="add-property-main">
+        <h2 className="add-property-header">Add New Property</h2>
+        
         {error && <Alert variant="danger">{error}</Alert>}
-        <Form onSubmit={handleSubmit}>
+        
+        <Form onSubmit={handleSubmit} className="property-form">
           <Form.Group className="mb-3">
-            <Form.Label>Title *</Form.Label>
-            <Form.Control name="title" value={formData.title} onChange={handleChange} required />
+            <Form.Label className="form-label required-field">Title</Form.Label>
+            <Form.Control 
+              name="title" 
+              value={formData.title} 
+              onChange={handleChange} 
+              required 
+            />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Description *</Form.Label>
+            <Form.Label className="form-label required-field">Description</Form.Label>
             <Form.Control
               as="textarea"
               rows={4}
               name="description"
               value={formData.description}
               onChange={handleChange}
-              required />
+              required
+            />
           </Form.Group>
 
           <Row>
             <Col md={4}>
               <Form.Group className="mb-3">
-                <Form.Label>Address *</Form.Label>
-                <Form.Control name="address" value={formData.location.address} onChange={handleChange} required />
+                <Form.Label className="form-label required-field">Address</Form.Label>
+                <Form.Control 
+                  name="address" 
+                  value={formData.location.address} 
+                  onChange={handleChange} 
+                  required 
+                />
               </Form.Group>
             </Col>
             <Col md={4}>
               <Form.Group className="mb-3">
-                <Form.Label>City *</Form.Label>
-                <Form.Control name="city" value={formData.location.city} onChange={handleChange} required />
+                <Form.Label className="form-label required-field">City</Form.Label>
+                <Form.Control 
+                  name="city" 
+                  value={formData.location.city} 
+                  onChange={handleChange} 
+                  required 
+                />
               </Form.Group>
             </Col>
             <Col md={4}>
               <Form.Group className="mb-3">
-                <Form.Label>Country *</Form.Label>
-                <Form.Control name="country" value={formData.location.country} onChange={handleChange} required />
+                <Form.Label className="form-label required-field">Country</Form.Label>
+                <Form.Control 
+                  name="country" 
+                  value={formData.location.country} 
+                  onChange={handleChange} 
+                  required 
+                />
               </Form.Group>
             </Col>
           </Row>
 
           <Form.Group className="mb-3">
-            <Form.Label>Price *</Form.Label>
-            <Form.Control type="number" name="price" value={formData.price} onChange={handleChange} required />
+            <Form.Label className="form-label required-field">Price</Form.Label>
+            <Form.Control 
+              type="number" 
+              name="price" 
+              value={formData.price} 
+              onChange={handleChange} 
+              required 
+            />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Property Type *</Form.Label>
-            <Form.Select name="propertyType" value={formData.propertyType} onChange={handleChange} required>
+            <Form.Label className="form-label required-field">Property Type</Form.Label>
+            <Form.Select 
+              name="propertyType" 
+              value={formData.propertyType} 
+              onChange={handleChange} 
+              required
+            >
               <option>Apartment</option>
               <option>Villa</option>
               <option>Commercial</option>
@@ -131,31 +165,72 @@ const AddPropertyPage = () => {
           <Row>
             <Col md={4}>
               <Form.Group className="mb-3">
-                <Form.Label>Square Footage</Form.Label>
-                <Form.Control type="number" name="squareFootage" value={formData.squareFootage} onChange={handleChange} />
+                <Form.Label className="form-label">Square Footage</Form.Label>
+                <Form.Control 
+                  type="number" 
+                  name="squareFootage" 
+                  value={formData.squareFootage} 
+                  onChange={handleChange} 
+                />
               </Form.Group>
             </Col>
             <Col md={4}>
               <Form.Group className="mb-3">
-                <Form.Label>Bedrooms</Form.Label>
-                <Form.Control type="number" name="bedrooms" value={formData.bedrooms} onChange={handleChange} />
+                <Form.Label className="form-label">Bedrooms</Form.Label>
+                <Form.Control 
+                  type="number" 
+                  name="bedrooms" 
+                  value={formData.bedrooms} 
+                  onChange={handleChange} 
+                />
               </Form.Group>
             </Col>
             <Col md={4}>
               <Form.Group className="mb-3">
-                <Form.Label>Bathrooms</Form.Label>
-                <Form.Control type="number" name="bathrooms" value={formData.bathrooms} onChange={handleChange} />
+                <Form.Label className="form-label">Bathrooms</Form.Label>
+                <Form.Control 
+                  type="number" 
+                  name="bathrooms" 
+                  value={formData.bathrooms} 
+                  onChange={handleChange} 
+                />
               </Form.Group>
             </Col>
           </Row>
 
           <Form.Group className="mb-3">
-            <Form.Label>Images URLs (comma separated)</Form.Label>
-            <Form.Control placeholder="https://image1.jpg, https://image2.jpg" name="images" value={formData.images} onChange={handleChange} />
+            <Form.Label className="form-label">Images URLs</Form.Label>
+            <Form.Control 
+              placeholder="https://image1.jpg, https://image2.jpg" 
+              name="images" 
+              value={formData.images} 
+              onChange={handleChange} 
+            />
+            <Form.Text className="text-muted">
+              Enter comma-separated image URLs
+            </Form.Text>
           </Form.Group>
 
-          <Button type="submit" variant="dark" disabled={loading}>
-            {loading ? <Spinner size="sm" animation="border" /> : 'Add Property'}
+          <Button 
+            type="submit" 
+            className="submit-btn" 
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <Spinner 
+                  as="span" 
+                  animation="border" 
+                  size="sm" 
+                  role="status" 
+                  aria-hidden="true" 
+                  className="me-2"
+                />
+                Adding...
+              </>
+            ) : (
+              'Add Property'
+            )}
           </Button>
         </Form>
       </Container>

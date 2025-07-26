@@ -13,6 +13,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AddPropertyPage from './pages/AddPropertyPage';
 import InquiryInfoPage from './pages/InquiryInfoPage';
 import './App.css'
+import AddEditPropertyPage from './pages/AddEditPropertyPage';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/add-property" element={<AddPropertyPage />} />
+        <Route path="/admin/add-property/:id" element={<AddEditPropertyPage />} />
         <Route path="/admin/inquiries" element={<InquiryInfoPage />} />
       </Routes>
 

@@ -16,7 +16,7 @@ const Navbar = () => {
     <BsNavbar bg="light" expand="lg" sticky="top" className="shadow-sm">
       <Container>
         <BsNavbar.Brand as={Link} to="/">
-        <h2>Real Estate</h2>
+        <h2 style={{marginLeft: "20px"}}>Real Estate</h2>
         </BsNavbar.Brand>
         <BsNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BsNavbar.Collapse id="basic-navbar-nav">

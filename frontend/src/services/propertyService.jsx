@@ -6,6 +6,7 @@ export const getProperties = async () => {
 };
 
 export const getPropertyById = async (id) => {
+  // console.log('aaa',id)
   const response = await api.get(`/properties/${id}`);
   return response.data;
 };
@@ -17,8 +18,8 @@ export const addProperty = async (property, token) => {
   return response.data;
 };
 
-export const updateProperty = async (id, updates, token) => {
-  const response = await api.put(`/properties/${id}`, updates, {
+export const updateProperty = async (id, property, token) => {
+  const response = await api.put(`/properties/${id}`, property, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;

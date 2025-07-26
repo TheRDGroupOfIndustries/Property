@@ -72,106 +72,112 @@ const InquiryInfoPage = () => {
   if (!admin) return null;
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="inquiry-container">
       <AdminSidebar />
-      <Container style={{ marginLeft: '220px', paddingTop: '3rem' }}>
-        <h2 className="mb-4">User Inquiries</h2>
+      <Container className="inquiry-main-content">
+        <h2 className="inquiry-header">User Inquiries</h2>
         
         {loading ? (
           <div className="text-center">
-            <Spinner animation="border" />
+            <Spinner animation="border" variant="primary" />
           </div>
         ) : error ? (
           <Alert variant="danger">{error}</Alert>
         ) : (
-          <Table striped bordered hover responsive>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Property</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Message</th>
-                <th>Preferred Contact</th>
-                <th>Sent At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {inquiries.length === 0 ? (
+          <div className="table-responsive">
+            <table className="inquiry-table">
+              <thead>
                 <tr>
-                  <td colSpan="9" className="text-center">
-                    No inquiries found
-                  </td>
+                  <th>#</th>
+                  <th>Property</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Message</th>
+                  <th>Preferred Contact</th>
+                  <th>Sent At</th>
+                  <th>Actions</th>
                 </tr>
-              ) : (
-                inquiries.map((inq, idx) => (
-                  <tr key={inq._id}>
-                    <td>{idx + 1}</td>
-                    <td>{inq.property?.title || 'N/A'}</td>
-                    <td>{inq.fullName}</td>
-                    <td>{inq.email}</td>
-                    <td>{inq.phone || '-'}</td>
-                    <td>{inq.message}</td>
-                    <td>{inq.preferredContactMethod}</td>
-                    <td>{new Date(inq.createdAt).toLocaleString()}</td>
-                    <td>
-                      <Button
-                        variant="info"
-                        size="sm"
-                        className="me-2"
-                        onClick={() => handleViewDetails(inq)}
-                      >
-                        <FaEye />
-                      </Button>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleDelete(inq._id)}
-                        disabled={deletingId === inq._id}
-                      >
-                        {deletingId === inq._id ? (
-                          <Spinner as="span" animation="border" size="sm" />
-                        ) : (
-                          <FaTrash />
-                        )}
-                      </Button>
+              </thead>
+              <tbody>
+                {inquiries.length === 0 ? (
+                  <tr>
+                    <td colSpan="9" className="no-inquiries">
+                      No inquiries found
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+                ) : (
+                  inquiries.map((inq, idx) => (
+                    <tr key={inq._id}>
+                      <td>{idx + 1}</td>
+                      <td>{inq.property?.title || 'N/A'}</td>
+                      <td>{inq.fullName}</td>
+                      <td>{inq.email}</td>
+                      <td>{inq.phone || '-'}</td>
+                      <td className="text-truncate" style={{ maxWidth: '200px' }}>{inq.message}</td>
+                      <td>{inq.preferredContactMethod}</td>
+                      <td>{new Date(inq.createdAt).toLocaleString()}</td>
+                      <td>
+                        <Button
+                          variant="info"
+                          className="view-btn"
+                          onClick={() => handleViewDetails(inq)}
+                        >
+                          <FaEye />
+                        </Button>
+                        <Button
+                          variant="danger"
+                          className="delete-btn"
+                          onClick={() => handleDelete(inq._id)}
+                          disabled={deletingId === inq._id}
+                        >
+                          {deletingId === inq._id ? (
+                            <Spinner as="span" animation="border" size="sm" />
+                          ) : (
+                            <FaTrash />
+                          )}
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
 
         {/* Inquiry Details Modal */}
-        <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
-          <Modal.Header closeButton>
+        <Modal 
+          show={showModal} 
+          onHide={() => setShowModal(false)} 
+          size="lg"
+          className="inquiry-modal"
+        >
+          <Modal.Header closeButton closeVariant="white">
             <Modal.Title>Inquiry Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {currentInquiry && (
               <div>
-                <div className="mb-3">
+                <div className="inquiry-detail-section">
                   <h5>Property Information</h5>
                   <p><strong>Title:</strong> {currentInquiry.property?.title || 'N/A'}</p>
                   <p><strong>Location:</strong> {currentInquiry.property?.location?.address || 'N/A'}, {currentInquiry.property?.location?.city || 'N/A'}</p>
                 </div>
-                <div className="mb-3">
+                <div className="inquiry-detail-section">
                   <h5>Contact Information</h5>
                   <p><strong>Name:</strong> {currentInquiry.fullName}</p>
                   <p><strong>Email:</strong> {currentInquiry.email}</p>
                   <p><strong>Phone:</strong> {currentInquiry.phone || '-'}</p>
                   <p><strong>Preferred Contact:</strong> {currentInquiry.preferredContactMethod}</p>
                 </div>
-                <div className="mb-3">
+                <div className="inquiry-detail-section">
                   <h5>Message</h5>
-                  <div className="p-3 bg-light rounded">
+                  <div className="inquiry-message">
                     {currentInquiry.message}
                   </div>
                 </div>
-                <div>
+                <div className="inquiry-detail-section">
                   <p><strong>Submitted:</strong> {new Date(currentInquiry.createdAt).toLocaleString()}</p>
                 </div>
               </div>

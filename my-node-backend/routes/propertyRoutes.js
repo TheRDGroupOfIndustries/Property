@@ -7,14 +7,15 @@ const {
   addProperty,
   updateProperty,
   deleteProperty,
-  markPropertyAsRented
+  // markPropertyAsRented
 } = require('../controllers/propertyController');
 
 router.get('/', getProperties);
 router.post('/', auth, addProperty);
 router.get('/:id', getPropertyById);   
+
 router.put('/:id', auth, updateProperty);
 router.delete('/:id', auth, deleteProperty);
-router.put('/:id/rent', auth, markPropertyAsRented);
+// router.put('/:id/rent', auth, markPropertyAsRented);
 
 module.exports = router;

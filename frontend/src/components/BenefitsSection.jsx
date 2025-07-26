@@ -4,27 +4,27 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 const benefits = [
   {
     icon: 'bi bi-arrow-repeat', title: 'Fitness Centers',
-    desc: 'We begin by conducting thorough market for to research to identify high-potential areas. This includes analyzing market trends.',
+    desc: 'Stay fit with state-of-the-art gyms & wellness zones. Premium equipment, yoga studios & personalized training sessions.',
   },
   {
     icon: 'bi bi-egg-fried', title: 'Modern Gourmet Kitchens',
-    desc: 'We begin by conducting thorough market for to research to identify high-potential areas. This includes analyzing market trends.',
+    desc: 'Sleek, high-end kitchens for culinary enthusiasts.Smart appliances, spacious islands & elegant finishes.',
   },
   {
     icon: 'bi bi-emoji-smile', title: 'Luxurious Spa Facilities',
-    desc: 'We begin by conducting thorough market for to research to identify high-potential areas. This includes analyzing market trends.',
+    desc: 'Rejuvenate in serene spa retreats with premium treatments. Steam rooms, saunas & relaxation lounges for ultimate comfort.',
   },
   {
     icon: 'bi bi-people', title: 'Community Social Spaces',
-    desc: 'We begin by conducting thorough market for to research to identify high-potential areas. This includes analyzing market trends.',
+    desc: 'Vibrant hubs for networking & leisure activities. Co-working lounges, game rooms & event-ready spaces.',
   },
   {
     icon: 'bi bi-wifi', title: 'Home Automation',
-    desc: 'We begin by conducting thorough market for to research to identify high-potential areas. This includes analyzing market trends.',
+    desc: 'Smart living with cutting-edge automated controls.Voice commands, security systems & energy-efficient tech',
   },
   {
     icon: 'bi bi-house-door', title: 'Convenient Parking',
-    desc: 'We begin by conducting thorough market for to research to identify high-potential areas. This includes analyzing market trends.',
+    desc: 'Secure, hassle-free parking with ample space. EV charging stations & valet services for added ease.',
   }
 ];
 

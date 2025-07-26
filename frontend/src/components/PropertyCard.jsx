@@ -1,6 +1,16 @@
 import React from 'react';
 import { Card, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { 
+  FaBed, 
+  FaBath, 
+  FaRulerCombined, 
+  FaMapMarkerAlt,
+  FaHome,
+  FaBuilding,
+  FaCity,
+  FaHotel
+} from 'react-icons/fa';
 
 const PropertyCard = ({ property }) => {
   const {
@@ -15,32 +25,64 @@ const PropertyCard = ({ property }) => {
     location,
   } = property;
 
-  const priceDisplay = propertyType.toLowerCase().includes('rent') ? (
-    `$${price}/mo`
-  ) : (
-    `$${price.toLocaleString()}`
-  );
+  const isRent = propertyType.toLowerCase().includes('rent');
+  const priceDisplay = isRent ? `₹${price}/mo` : `₹${price.toLocaleString()}`;
 
+    // Get icon based on property type
+  const getPropertyIcon = () => {
+    switch(propertyType.toLowerCase()) {
+      case 'apartment':
+        return <FaBuilding className="me-1" />;
+      case 'villa':
+        return <FaHome className="me-1" />;
+      case 'commercial':
+        return <FaCity className="me-1" />;
+      case 'studio':
+        return <FaHotel className="me-1" />;
+      default:
+        return <FaHome className="me-1" />;
+    }  };
+  
   return (
-    <Card className="h-100 shadow-sm">
-      <Link to={`/property/${_id}`}>
+    <Card className="property-card h-100 shadow-hover">
+      <Link to={`/property/${_id}`} className="property-image-link">
         <Card.Img
           variant="top"
           src={images[0] || 'https://via.placeholder.com/400x200?text=No+Image'}
           alt={title}
-          style={{ height: '200px', objectFit: 'cover' }}
+          className="property-card-img"
         />
+        {/* <div className="property-image-overlay">
+          <span className="view-details-text">View Details</span>
+        </div> */}
       </Link>
-      <Card.Body>
-        <Badge bg="secondary" className="mb-2">{propertyType}</Badge>
-        <Card.Title style={{ fontWeight: '600' }}>{title}</Card.Title>
-        <Card.Subtitle className="mb-2 text-primary">{priceDisplay}</Card.Subtitle>
-        <div style={{ fontSize: '0.85rem', color: '#555' }}>
-          <span>{squareFootage ? `${squareFootage} sq. ft.` : 'N/A'}</span> &nbsp;|&nbsp;
-          <span>{bedrooms ? bedrooms : 0} Bed</span> &nbsp;|&nbsp;
-          <span>{bathrooms ? bathrooms : 0} Bath</span>
+      <Card.Body className="property-card-body">
+        <Badge 
+          className={`property-badge ${isRent ? 'rent' : 'sale'}`}
+        >
+          {getPropertyIcon()}
+          {propertyType}
+        </Badge>
+        <Card.Title className="property-title text-capitalize">{title}</Card.Title>
+        <Card.Subtitle className={`property-price ${isRent ? 'rent' : 'sale'}`}>
+          {priceDisplay}
+        </Card.Subtitle>
+        <div className="property-details">
+          <span className="detail-item">
+            <FaRulerCombined className="detail-icon" />
+            {squareFootage ? `${squareFootage} sq.ft` : 'N/A'}
+          </span>
+          <span className="detail-item">
+            <FaBed className="detail-icon" />
+            {bedrooms || 0} Bed
+          </span>
+          <span className="detail-item">
+            <FaBath className="detail-icon" />
+            {bathrooms || 0} Bath
+          </span>
         </div>
-        <div style={{ fontSize: '0.8rem', marginTop: '5px', color: '#888' }}>
+        <div className="property-location">
+          <FaMapMarkerAlt className="location-icon" />
           {location?.city}, {location?.country}
         </div>
       </Card.Body>
