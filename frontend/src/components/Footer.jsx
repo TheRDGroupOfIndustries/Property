@@ -12,7 +12,7 @@ const Footer = () => {
         <Row className='g-4'>
           {/* EstateVibe description column */}
           <Col lg={4} md={6}>
-            <h4 className="footer-heading"><em>EstateVibe</em></h4>
+            <h4 className="footer-heading"><em> Real Estate</em></h4>
             <p className="mb-4 ">
               At Visionary Estates, we provide top-tier real estate services to meet all your property needs. 
               Whether you're buying or selling.

@@ -346,7 +346,7 @@
 }
 
 .property-card-body {
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .property-badge {
@@ -360,7 +360,7 @@
   margin-bottom: 1rem;
 }
 
-.property-badge.sale {
+/* .property-badge.sale {
   background-color: blue !important;
   color: white;
 }
@@ -368,7 +368,7 @@
 .property-badge.rent {
   background-color: #3498db !important;
   color: white;
-}
+} */
 
 .property-title {
   font-size: 1.25rem;
@@ -386,22 +386,20 @@
 .property-price {
   font-size: 1.3rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 }
 
 .property-price.sale {
-  color: blue;
+  color: rgb(124, 124, 162);
 }
 
-.property-price.rent {
-  color: #3498db;
-}
+
 
 .property-details {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-top: -2rem;
   color: #7f8c8d;
 }
 
@@ -409,6 +407,7 @@
   display: flex;
   align-items: center;
   font-size: 0.9rem;
+  margin-right: 20px;
 }
 
 .detail-icon {
@@ -733,14 +732,25 @@
 }
 
 .property-details {
-  padding: 1.5rem;
+  padding: 2.5rem;
 }
-
+.property-type{
+   /* font-size: 0.8rem; */
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 0.5rem 1rem;
+  color: white;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  background-color: #0a1f3a;
+  margin-right: 1rem;
+}
 .property-title {
   font-size: 1.3rem;
   font-weight: 600;
   color: #2c3e50;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
 }
 
 .property-location {
@@ -760,7 +770,7 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: #e74c3c;
-  margin-bottom: 1.2rem;
+  /* margin-bottom: 1.2rem; */
 }
 
 .property-btn {
@@ -948,6 +958,9 @@
   line-height: 1.8;
   color: #555;
   margin-bottom: 2rem;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 1rem;
 }
 
 /* Amenities */

@@ -58,7 +58,7 @@ const PropertyCard = ({ property }) => {
       </Link>
       <Card.Body className="property-card-body">
         <Badge 
-          className={`property-badge ${isRent ? 'rent' : 'sale'}`}
+          className="property-badge"
         >
           {getPropertyIcon()}
           {propertyType}

@@ -56,55 +56,14 @@ const PropertiesPage = () => {
       <Spinner animation="border" />
     </div>
   );
+  
 
   return (
    <div>
      <div className="properties-container">
       <div className="properties-header">
         <h2 className="properties-title">Properties</h2>
-        {/* <div className="filter-section">
-          <Form.Select 
-            name="type"
-            value={filters.type}
-            onChange={handleFilterChange}
-            className="filter-control"
-          >
-            <option value="">All Types</option>
-            <option value="apartment">Apartment</option>
-            <option value="villa">Villa</option>
-            <option value="commercial">Commercial</option>
-             <option value="studio">Studio</option>
-            <option value="ther">Other</option>
-          </Form.Select>
-
-          <Form.Control
-            type="number"
-            name="minPrice"
-            placeholder="Min Price"
-            value={filters.minPrice}
-            onChange={handleFilterChange}
-            className="filter-control"
-          />
-
-          <Form.Control
-            type="number"
-            name="maxPrice"
-            placeholder="Max Price"
-            value={filters.maxPrice}
-            onChange={handleFilterChange}
-            className="filter-control"
-          />
-
-          <Form.Control
-            type="text"
-            name="location"
-            placeholder="Location"
-            value={filters.location}
-            onChange={handleFilterChange}
-            className="filter-control"
-          />
-        </div> */}
-        <div className="filter-section">
+            <div className="filter-section">
   <div className="filter-group">
     <Form.Select 
             name="type"
@@ -171,11 +130,11 @@ const PropertiesPage = () => {
                 className="property-image"
               />
               <div className="property-details">
-                
+                <div className='property-type'>{property.propertyType} </div>
                 <h3 className="property-title text-capitalize">{property.title}</h3>
-                <p className="property-location">
+                <h4 className="property-location">
                   {property.location.city}, {property.location.country}
-                </p>
+                </h4>
                 <p className="property-price">
                   ₹{property.price.toLocaleString()}
                   {property.propertyType.toLowerCase().includes('rent') && '/mo'}
