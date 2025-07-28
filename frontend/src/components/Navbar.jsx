@@ -20,7 +20,7 @@ const Navbar = () => {
         </BsNavbar.Brand>
         <BsNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BsNavbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto align-items-center">
+          <Nav className="ms-auto align-items-center ">
             <Nav.Link as={Link} to="/properties">Properties</Nav.Link>
             {!admin ? (
               <Nav.Link as={Link} to="/admin/login">Admin Login</Nav.Link>
