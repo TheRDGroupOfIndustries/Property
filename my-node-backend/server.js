@@ -11,7 +11,7 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "https://property5.vercel.app" }));
 app.use(express.json());
 
 
